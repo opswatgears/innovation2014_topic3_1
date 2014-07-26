@@ -1,0 +1,17 @@
+{
+  "name": "metascan",
+  "title": "metascan",
+  "id": "jid1-cHAiBtfRz1hX9Q",
+  "description": "a basic add-on",
+  "author": "",
+  "license": "MPL 2.0",
+  "version": "0.1",
+  "preferences" : [{
+			"name" : "MScanOnlineAPIKey",
+			"title" : "Metascan Online API Key",
+			"description" : "Get API Key From https://portal.opswat.com",
+			"type" : "string",
+			"value" : ""
+		}
+	]
+}
