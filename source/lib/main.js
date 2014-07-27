@@ -19,7 +19,7 @@ Cu.import("resource://gre/modules/FileUtils.jsm");
 Cu.import("resource://gre/modules/NetUtil.jsm");
 require("sdk/simple-prefs").on("", onPrefChange);
 if(apikey !== ""){
-	checkApiKey	(apikey);
+	checkApiKey	(apikey,1);
 }else{
 	popup('Alert','Please input your API key in option');
 }
@@ -29,18 +29,17 @@ function onPrefChange(prefName) {
 }
  var button = buttons.ActionButton({
   id: "mozilla-link",
-  label: "Visit Mozilla",
+  label: "Visit Metascan-online",
   icon: {
-    "16": "./icon-16.png",
-    "32": "./icon-32.png",
-    "64": "./icon-64.png"
+    "16": "./images/icon.png",
+    "32": "./images/icon.png",
+    "64": "./images/icon.png"
   },
   onClick: handleClick
 });
 
-function handleClick(state) {
-	popup('aaaaa','bbbbb');
-	// tabs.open("http://www.rarlab.com/download.htm");
+function handleClick(state) {	
+	tabs.open("https://www.metascan-online.com");
 }
 var contextMenu = require("sdk/context-menu");
  var menuItem = contextMenu.Item({
@@ -186,7 +185,7 @@ function getSha1(fileContent){
 	return hash;
 }
 
-function checkApiKey(checkValue){
+function checkApiKey(checkValue,alert){
 	Request({
 		url : hashAddress + 'F7CAF62D886BDFAF1E400F039033A28A',
 		headers : {
@@ -194,7 +193,9 @@ function checkApiKey(checkValue){
 		},
 		onComplete : function (response) {
 			if(response.status === 200){
-				popup("Notice","API key added successfully");
+				if(alert === undefined){
+					popup("Notice","API key added successfully");
+				}
 			} else{
 				if(response.status === 401){
 					apikey = "";
