@@ -1,0 +1,245 @@
+* {
+margin: 0;
+padding: 0;
+}
+
+#msfclogo {
+	background: url(images/meta.png);
+	background: url(images/meta.png) no-repeat top left;
+	background: rgba(0,0,0,0) url(images/meta.svg) no-repeat top left;
+	display: block;
+	width: 426.5px;
+	height: 35px;
+	text-indent: -9999px;
+	margin-top: 65px;
+
+}
+
+#loadingp {
+	margin: 0 auto;
+	text-align: center;
+	width: 700px;
+}
+
+#apikeyform {
+	margin: 0 auto;
+	width: 764px;
+}
+
+#apikeyform #apikey {
+	background: #fbfbfb;
+	border: 0;
+	border: 1px solid #eaeced;
+	color: #545454;
+	font-family: Open Sans;
+	font-size: 16px;
+	-webkit-transition: all 0.1s linear;
+	-moz-transition: all 0.1s linear;
+	-o-transition: all 0.1s linear;
+	transition: all 0.1s linear;
+	-moz-border-radius: 5px 0 0 5px;
+	-webkit-border-radius: 5px 0 0 5px;
+	border-radius: 5px 0 0 5px;
+	-khtml-border-radius: 5px 0 0 5px;
+	padding: 25px 30px;
+	width: 559px;
+}
+
+#keysubmit {
+	border: 0;
+	background: #00a6dd;
+	color: #fff;
+	font-family: 'Open Sans' 'arial';
+	font-size: 16px;
+	padding: 26px 30px 26px 30px;
+	text-transform: uppercase;
+	-moz-border-radius: 0 5px 5px 0;
+	-webkit-border-radius: 0 5px 5px 0;
+	border-radius: 0 5px 5px 0;
+	-khtml-border-radius: 0 5px 5px 0;
+}
+
+.leading.linespace {
+	line-height: 35px;
+	float: left;
+}
+
+#rightimage {
+	float: left;
+	padding-left: 60px;
+	padding-top: 12px;
+}
+
+#leftimage {
+	float: left;
+	padding-right: 60px;
+	padding-top: 12px;
+}
+
+.subpage #content > 
+.cntr {
+	padding: 80px;
+	padding-bottom: 220px;
+	width: 940px;
+}
+
+#content .container {
+	padding-bottom: 220px;
+	width: 940px;
+	background: none repeat scroll 0 0 #FFFFFF;
+	border-radius: 5px;
+	margin: 0 auto;
+}
+
+#original {
+	float: left;
+	color: #ffffff;
+
+}
+
+#results {
+	float: right;
+	color: #ffffff;
+}
+
+#scanheader {
+	background-color: #838383;
+	border-bottom: 1px solid #EAECED;
+	height: 27px;
+	padding: 15px 40px;
+	width: 860px;
+}
+
+.listcontent {
+	border-left: 1px solid #EAECED;
+	border-right: 1px solid #EAECED;
+	border-bottom: 1px solid #EAECED;
+}
+
+.listcontent li {
+	text-decoration: none;
+	list-style: none;
+	padding: 15px 40px;
+	border-bottom: 1px solid #EAECED;
+	width: 860px;
+	height: 27px;
+}
+
+.filename {
+	float: left;
+	height: 27px;
+}
+
+.status {
+	float:right;
+}
+
+.status * {
+	vertical-align: middle;
+}  
+
+.status-icon {
+	padding-left: 30px;
+}
+
+#bar2 {
+	background-color: #00A6DD;
+	width: 100%;
+	height: 50px;
+}
+
+#metaext {
+	padding-left: 15px;
+}
+
+#textcontent {
+	color: #898989;
+	font-size: 9px;
+	font-family: 'open sans' 'arial';
+	padding: 20px;
+}
+
+#headertext {
+	width: 266px;
+	height: 30px;
+}
+
+#check {
+	float: left;
+}
+
+#view {
+	float: right;
+}
+
+#help {
+	float: right;
+	margin-top: 35px;
+	font-style: none;
+}
+
+.infobox {
+	width: 266px;
+	height: 120px;
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 1px solid #EAECED;
+	border-radius: 3px;
+}
+
+.apikey {
+	font-size: 16px;
+	padding-left: 100px;
+	padding-top: 15px;
+	padding-bottom: 20px;
+	color: #333333;
+}
+
+.apikeyext {
+	font-size: 10px;
+	padding-left: 20px;
+	padding-top: 15px;
+	padding-bottom: 20px;
+	color: #333333;
+}
+
+#apikeyformext {
+	width: 200px;
+	margin: 0 auto;
+}
+
+#apikeyformext #apikey {
+	background: #fbfbfb;
+	border: 0;
+	border: 1px solid #eaeced;
+	color: #545454;
+	font-family: Open Sans;
+	font-size: 10px;
+	-webkit-transition: all 0.1s linear;
+	-moz-transition: all 0.1s linear;
+	-o-transition: all 0.1s linear;
+	transition: all 0.1s linear;
+	-moz-border-radius: 3px 0 0 3px;
+	-webkit-border-radius: 3px 0 0 3px;
+	border-radius: 3px 0 0 3px;
+	-khtml-border-radius: 3px 0 0 3px;
+	padding: 6px 7px;
+}
+
+#keysubmitext {
+	border: 0;
+	background: #00a6dd;
+	color: #fff;
+	font-family: 'Open Sans' 'arial';
+	font-size: 10px;
+	padding: 8px 7px 7px 7px;
+	text-transform: uppercase;
+	-moz-border-radius: 0 5px 5px 0;
+	-webkit-border-radius: 0 3px 3px 0;
+	border-radius: 0 3px 3px 0;
+	-khtml-border-radius: 0 3px 3px 0;
+}
+#loadingp {
+    margin: 0px auto;
+    text-align: center;
+    width: 700px;
+}

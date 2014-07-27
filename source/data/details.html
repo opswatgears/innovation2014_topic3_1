@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie ie6 no-js" lang="en-US"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7 no-js" lang="en-US"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8 no-js" lang="en-US"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9 no-js" lang="en-US"> <![endif]-->
+<!--[if lt IE 9]><script type="text/javascript" src="https://www.metascan-online.com/static/js/html5_v3.js"></script><![endif]-->
+<!--[if lt IE 9]><script type="text/javascript" src="https://www.metascan-online.com/static/js/css3-mediaqueries.js"></script><![endif]-->
+<html>
+<head>
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+	<meta content="utf-8" http-equiv="encoding">
+	<meta name="google-site-verification" content="w2cJA6YRSyCTfb_Ag6qN4uhcMqv_gA3113OTSXojoZg" />
+	<title data-bind="text: 'IP Scan Results for ' + scanDetails.address + ' from Metascan Online'"></title>
+	<meta name="keywords" content="virus, spyware, malware, scan, online, online virus scan, virusscan, upload, hijack this, hijackthis, trojan, rootkit, spam, antivir, avast, avg, bitdefender, clamav, drweb, f-prot, f-secure, fortinet, kaspersky, nod32, norman, virusbuster, panda antivirus, trend micro, norton, symantec, infected, online scan, online scanner, virusscanner, free online scan, virus scanner, free online scanner, spyware scanner, free spyware check" />
+	<link rel="shortcut icon" href="https://www.metascan-online.com/static/img/favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" type="text/css" href="https://www.metascan-online.com/static/css/style_v3.css?25" />
+	<!--[if lt IE 9]><link rel="stylesheet" type="text/css" href="https://www.metascan-online.com/static/css/fixie.css?1" /></script><![endif]-->
+	<style>
+	    @media screen and (max-width: 1099px) {
+            #results-table-ipscan tr td:first-child:before {
+	            content: 'Source: ';
+	            color: #545454;
+	        }
+	        #results-table-ipscan tr td:first-child + td:before {
+	            content: 'Last Update: ';
+	            color: #545454;
+	        }
+	        #results-table-ipscan tr td:first-child + td + td:before {
+	            content: 'Reference Link: ';
+	            color: #545454;
+	        }
+            #results-table-ipscan tr td:first-child + td + td + td:before {
+	            content: 'Assessment: ';
+	            color: #545454;
+	        }
+            #results-table-ipscan tr td:first-child + td + td + td + td:before {
+	            content: 'Score: ';
+	            color: #545454;
+	        }
+	    }
+	</style>
+
+<script>var mainURL='https://www.metascan-online.com/';var locale='en';var rtl=false;var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-24534923-1']);_gaq.push(['_trackPageview']);(function(){var ga=document.createElement('script');ga.type='text/javascript';ga.async=true;ga.src=('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/ga.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(ga,s);})();</script>
+<!-- Google Analytics Social Button Tracking -->
+<script type="text/javascript" src="https://www.metascan-online.com/static/js/ga_social_tracking.min.js"></script>
+<script>window.twttr=(function(d,s,id){var t,js,fjs=d.getElementsByTagName(s)[0];if(d.getElementById(id))return;js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);return window.twttr||(t={_e:[],ready:function(f){t._e.push(f)}});}(document,"script","twitter-wjs"));twttr.ready(function(twttr){_ga.trackTwitter();});function LinkedInShare(){_gaq.push(['_trackSocial','LinkedIn','Share']);}</script>
+</head>
+<body id="results" class = "subpage">
+<div id="topb">
+<div class="cntr">
+<p><a id="opswat-logo" target="_blank" href="http://www.opswat.com">OPSWAT</a></p>
+</div>
+</div>
+<div id="hdwr">
+<header class="cntr">
+<h1><a id="mso-logo" href="https://www.metascan-online.com/en">Metascan Online</a></h1>
+
+</header>
+</div>
+<script type="text/javascript" src="https://www.metascan-online.com/static/js/jquery-1.10.2.min_v3.js" ></script>
+<script type="text/javascript" src="https://www.metascan-online.com/static/js/modernizr.custom.57969.js" ></script>
+<script type="text/javascript" src="scripts/result_ipscan_v3.js"></script>
+<script type="text/javascript" src="scripts/knockout-3.1.0.js" ></script>
+
+        <div id="content" >
+        <div class="cntr">
+            <div id="errorshowresult">
+                <p id="alertshowresult">!</p>
+                <span id="alerttextresult">File is empty</span>
+            </div>
+            <section id="results-header">
+                <img id="badge" src="" alt=""/>
+                <div id='share-scanning-ipscan' class="sm-blog share-scanning" style="display: block">
+				</div>
+                <section id="info">
+                    <section>
+                        <div id='filename-wrap'>
+                            <div id="fileName">
+                                <div id="fileNameDiv" class="ellipsisClass" data-bind="attr : {title: scanDetails.address}, text: scanDetails.address"></div>
+                                <input id="fileNameInput" readonly="" data-bind="attr : {value: scanDetails.address}">
+
+                            </div>
+						</div>
+
+						<p data-bind="html: '<span>Country Name</span>' + (scanDetails.geo_info.country_name || 'Not available')"></p>
+						<p data-bind="html: '<span>Country Code</span>' + (scanDetails.geo_info.country_code || 'Not available')"></p>
+						<p data-bind="html: '<span>Region Name</span>' + (scanDetails.geo_info.region_name || 'Not available')"></p>
+						<p data-bind="html: '<span>Region Code</span>' + (scanDetails.geo_info.region_code || 'Not available')"></p>
+						<p data-bind="html: '<span>City</span>' + (scanDetails.geo_info.city || 'Not available')"></p>
+					</section>
+                </section>
+            </section>
+            <table id="results-table-ipscan" class="sortable" style="margin-top: 50px;">
+                <tbody>
+	                <tr class="table-title">
+	                    <th><span class="sortheader" id="on_start_table">Source<span data-sortdir="down" class="sortarrow"><img alt="" src="https://www.metascan-online.com/static/img/arrow_sortable_none.png"></span></span></th>
+                        <th><span class="sortheader">Last Update<span id="2" class="sortarrow"><img alt="" src="https://www.metascan-online.com/static/img/arrow_sortable_none.png"></span></span></th>
+                        <th><span class="sortheader">Reference Link<span id="1" class="sortarrow"><img alt="" src="https://www.metascan-online.com/static/img/arrow_sortable_none.png"></span></span></th>
+                        <th></th>
+                        <th><span class="sortheader">Score<span id="4" class="sortarrow"><img alt="" src="https://www.metascan-online.com/static/img/arrow_sortable_none.png"></span></span></th>
+	                    <th class="result"><span class="sortheader">Result<span id="5" class="sortarrow"><img alt="" src="https://www.metascan-online.com/static/img/arrow_sortable_none.png"></span></span></th>
+	                </tr>
+				</tbody>
+            </table>
+        </div>
+    </div>
+
+<script type="text/javascript" src="https://www.metascan-online.com/static/js/sortable.js?1"></script>
+
+<script type="text/javascript">
+    var cleanResult = 'Not listed as malicious';
+    var whiteList = 'Listed as not malicious';
+    var threadDetected = 'Threat detected';
+	
+	window.onload = function(){
+		ShowResultDetail();
+		ko.applyBindings(iper);
+		var d = new Date(iper.scanDetails.start_time);
+		var curr_date = d.getDate();
+		curr_date = ("00" + curr_date).slice(-2);
+		var curr_month = d.getMonth();
+		curr_month++;
+		curr_month = ("00" + curr_month).slice(-2);
+		var curr_year = d.getFullYear();
+		
+		var param = {
+		date : curr_month + "/" + curr_date + "/" + curr_year, 
+		engines: iper.scanDetails.scan_results.length,
+		virus: iper.scanDetails.detected_by,
+		ipscan: 1,
+		};
+		$("#badge").attr("src", 'https://www.metascan-online.com/badge/index.php?' + jQuery.param(param));
+	}
+</script><footer>
+<div class="cntr">
+<section id="links">
+<nav class="footer-nav">
+<ul class="first">
+<li><a href="https://www.metascan-online.com/en/public-api">Public API</a></li>
+<li><a href="https://www.metascan-online.com/en/blog">Blog</a></li>
+<li><a href="https://www.metascan-online.com/en/about">About</a></li>
+<li><a href="https://www.metascan-online.com/en/student-competition">Student App Competition</a></li>
+</ul>
+<ul>
+<li><a href="https://www.metascan-online.com/en/contact-us">Contact Us</a></li>
+<li><a href="https://www.metascan-online.com/en/sitemap">Sitemap</a></li>
+<li><a href="https://www.metascan-online.com/en/terms-and-conditions">Terms and conditions</a></li>
+</ul>
+</nav>
+<ul id="sm">
+<li class="sm fb"><a target="_blank" href="https://www.facebook.com/OPSWAT">Facebook</a></li>
+<li class="sm tw"><a target="_blank" href="https://twitter.com/opswat">Twitter</a></li>
+<li class="sm lk"><a target="_blank" href="http://www.linkedin.com/company/opswat">LinkedIn</a></li>
+<li class="sm gp"><a target="_blank" href="https://plus.google.com/+OpswatInc">Google+</a></li>
+</ul>
+</section>
+<section id="bl">
+<p class="copy">&copy; 2014 OPSWAT, Inc. All rights reserved</p>
+<p class="version">Version: 3.0.0.8786</p>
+</section>
+</div>
+</footer>
+<script>piAId='28952';piCId='51272';(function(){function async_load(){var s=document.createElement('script');s.type='text/javascript';s.src=('https:'==document.location.protocol?'https://pi':'http://cdn')+'.pardot.com/pd.js';var c=document.getElementsByTagName('script')[0];c.parentNode.insertBefore(s,c);}
+if(window.attachEvent){window.attachEvent('onload',async_load);}
+else{window.addEventListener('load',async_load,false);}})();$(function(){var lang=$('#lang');var lang_y=-lang.find('ul').height();var more=$('#more');var more_y=-more.find('ul').height();dropdown(lang,lang_y);dropdown(more,more_y);});function dropdown(el,y){el.find('ul').css('top',y);el.mouseover(function(){el.find('ul').stop().animate({top:35},200);}).mouseout(function(){el.find('ul').stop().animate({top:y},200);});}</script>
+
+</body>
+</html>

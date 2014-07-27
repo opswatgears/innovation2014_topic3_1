@@ -1,10 +1,15 @@
 var buttons = require('sdk/ui/button/action');
-var tabs = require("sdk/tabs");
+
 var Request = require("sdk/request").Request;
 var selfSDK = require("sdk/self");
+var tabsSDK = require("sdk/tabs");
+
 var pageModSDK = require("sdk/page-mod");
 var iofile = require("sdk/io/file");
 var timer = require('sdk/timers');
+var simpleStorage = require('sdk/simple-storage');
+
+simpleStorage.storage.result = [];
 
 var {env} = require('sdk/system/environment');
 const {components} = require("chrome");
@@ -29,7 +34,7 @@ function onPrefChange(prefName) {
 }
  var button = buttons.ActionButton({
   id: "mozilla-link",
-  label: "Visit Metascan-online",
+  label: "Show scan history",
   icon: {
     "16": "./images/icon.png",
     "32": "./images/icon.png",
@@ -39,7 +44,8 @@ function onPrefChange(prefName) {
 });
 
 function handleClick(state) {	
-	tabs.open("https://www.metascan-online.com");
+	showHistory();
+	
 }
 var contextMenu = require("sdk/context-menu");
  var menuItem = contextMenu.Item({
@@ -51,22 +57,29 @@ var contextMenu = require("sdk/context-menu");
                  '});',	
   onMessage: function (url) {
 	if(apikey !== ""){
-		DownloadFile(url);
+		tabsSDK.open({
+			url : selfSDK.data.url("loading.html"),
+			onOpen: function onOpen(tab){
+				DownloadFile(url,tab);
+			}
+			
+		});		
+		
 	}else{
 		popup('Alert','Please input your API key in option');
 	}
   }
 });
 
-function processDownload(fileName,filePath){
+function processDownload(fileName,filePath,tab){
 	console.log("download complete");
 	var fh = iofile.open(filePath, 'rb');	
 	var content = fh.read();
 	var hashValue = getSha1(content);	
 	fh.close();
-	checkHash(hashValue,content,fileName,filePath);
+	checkHash(hashValue,content,fileName,filePath,tab);
 }
-function DownloadFile(downloadURL)
+function DownloadFile(downloadURL,tab)
 {	
 	var fileName = downloadURL.substring(downloadURL.lastIndexOf('/') + 1);
 	fileName = fileName.match(/([^?]*)/)[1];	
@@ -79,7 +92,7 @@ function DownloadFile(downloadURL)
     oLocalFile.initWithPath(url_name_f);	
     var oDownloadObserver = {
 		onDownloadComplete: function(nsIDownloader, nsresult, oFile) {
-			processDownload(fileName,url_name_f);
+			processDownload(fileName,url_name_f,tab);
 		}
 	};    
     oDownloader.QueryInterface(chrome.Ci.nsIDownloader);
@@ -89,7 +102,7 @@ function DownloadFile(downloadURL)
 
 }
 
-function checkHash(hash,fileContent,fileName,filePath){
+function checkHash(hash,fileContent,fileName,filePath,tab){
 	Request({
 		url : hashAddress + hash,
 		headers : {
@@ -99,14 +112,20 @@ function checkHash(hash,fileContent,fileName,filePath){
 			if(response.status === 200){
 				scanDetails = response.json;			
 				if(scanDetails.data_id !== undefined && scanDetails.data_id !==""){
+					var temp = {};
+					temp.fileName = scanDetails.file_info.display_name;
+					temp.data_id = scanDetails.data_id;
+					temp.threatfound = scanDetails.scan_results.scan_all_result_a;
+					simpleStorage.storage.result.push(temp);
 					console.log('old file');
 					iofile.remove(filePath);
-					tabs.open(resultAddress + scanDetails.data_id);
+					tab.url = resultAddress + scanDetails.data_id;
 				}else{
 					console.log('new file');
-					sendFile(fileName,fileContent,filePath);
+					sendFile(fileName,fileContent,filePath,tab);
 				}
 			} else{
+				iofile.remove(filePath);
 				if(response.status === 401){
 					apikey = '';
 					popup("Notice","Wrong APIkey");
@@ -119,7 +138,7 @@ function checkHash(hash,fileContent,fileName,filePath){
 	}).get();
 }
 
-function sendFile(fileName,fileContent,filePath){
+function sendFile(fileName,fileContent,filePath,tab){
 	Request({
 		url: scanAddress,
 		content: fileContent,
@@ -131,7 +150,7 @@ function sendFile(fileName,fileContent,filePath){
 			iofile.remove(filePath);
 			if(response.status === 200){
 				var value = response.json;
-				getResult(value.rest_ip,value.data_id);
+				getResult(value.rest_ip,value.data_id,tab);
 			} else{
 				if(response.status === 401){
 					popup("Notice","Wrong APIkey");
@@ -144,7 +163,7 @@ function sendFile(fileName,fileContent,filePath){
     }).post();
 }
 
-function getResult(restIp,data_id){
+function getResult(restIp,data_id,tab){
 	var requestUrl = "";
 	if (restIp !== undefined) {
 		requestUrl = "https://" + restIp + "/file/";        
@@ -161,10 +180,15 @@ function getResult(restIp,data_id){
 			if(response.status === 200){
 				scanDetails = response.json;			
 				if(scanDetails.scan_results.progress_percentage === 100){
-					tabs.open(resultAddress + data_id);
+					var temp = {};
+					temp.fileName = scanDetails.file_info.display_name;
+					temp.data_id = scanDetails.data_id;
+					temp.threatfound = scanDetails.scan_results.scan_all_result_a;
+					simpleStorage.storage.result.push(temp);
+					tab.url = resultAddress + data_id;
 				}else{
 					timer.setTimeout(function(){
-						getResult(restIp,data_id);
+						getResult(restIp,data_id,tab);
 					},1000);
 				}
 			} else{
@@ -179,9 +203,8 @@ function getResult(restIp,data_id){
 	}).get();
 }
 
-function getSha1(fileContent){
-	var file_encode_string = CryptoJS.enc.Latin1.parse(fileContent);
-	var hash = CryptoJS.SHA1(file_encode_string).toString(CryptoJS.enc.Hex);
+function getSha1(fileContent){	
+	var hash = CryptoJS.SHA1(fileContent).toString(CryptoJS.enc.Hex);
 	return hash;
 }
 
@@ -214,6 +237,34 @@ function popup(title, msg) {
                                   '_blank', 'chrome,titlebar=no,popup=yes', null);
 	win.arguments = [image, title, msg, false, ''];
 }
+
+function showHistory(){	
+	tabsSDK.open({
+		url : selfSDK.data.url("result.html"),
+		onReady : function onReady(tab) {
+
+			if (tab.url !== selfSDK.data.url("result.html"))
+				return;
+
+			var worker = tab.attach({
+					contentScriptFile : [selfSDK.data.url('scripts/web.js')],
+				});
+			worker.port.emit('SetScannedIPers', simpleStorage.storage.result);	
+			worker.port.on('ClickDetailEvent', function (iper) {
+				wantedDetailsIper = iper;
+				tab.on("ready", function(tab){
+					var worker = tab.attach({
+						  contentScriptFile : [selfSDK.data.url('scripts/web.js')],
+					});
+					worker.port.emit('SetScanDetails', wantedDetailsIper);
+				});
+				tab.url = selfSDK.data.url("details.html");
+			});			
+		},
+	});
+
+}
+
 var CryptoJS=CryptoJS||function(e,m){var p={},j=p.lib={},l=function(){},f=j.Base={extend:function(a){l.prototype=this;var c=new l;a&&c.mixIn(a);c.hasOwnProperty("init")||(c.init=function(){c.$super.init.apply(this,arguments)});c.init.prototype=c;c.$super=this;return c},create:function(){var a=this.extend();a.init.apply(a,arguments);return a},init:function(){},mixIn:function(a){for(var c in a)a.hasOwnProperty(c)&&(this[c]=a[c]);a.hasOwnProperty("toString")&&(this.toString=a.toString)},clone:function(){return this.init.prototype.extend(this)}},
 n=j.WordArray=f.extend({init:function(a,c){a=this.words=a||[];this.sigBytes=c!=m?c:4*a.length},toString:function(a){return(a||h).stringify(this)},concat:function(a){var c=this.words,q=a.words,d=this.sigBytes;a=a.sigBytes;this.clamp();if(d%4)for(var b=0;b<a;b++)c[d+b>>>2]|=(q[b>>>2]>>>24-8*(b%4)&255)<<24-8*((d+b)%4);else if(65535<q.length)for(b=0;b<a;b+=4)c[d+b>>>2]=q[b>>>2];else c.push.apply(c,q);this.sigBytes+=a;return this},clamp:function(){var a=this.words,c=this.sigBytes;a[c>>>2]&=4294967295<<
 32-8*(c%4);a.length=e.ceil(c/4)},clone:function(){var a=f.clone.call(this);a.words=this.words.slice(0);return a},random:function(a){for(var c=[],b=0;b<a;b+=4)c.push(4294967296*e.random()|0);return new n.init(c,a)}}),b=p.enc={},h=b.Hex={stringify:function(a){var c=a.words;a=a.sigBytes;for(var b=[],d=0;d<a;d++){var f=c[d>>>2]>>>24-8*(d%4)&255;b.push((f>>>4).toString(16));b.push((f&15).toString(16))}return b.join("")},parse:function(a){for(var c=a.length,b=[],d=0;d<c;d+=2)b[d>>>3]|=parseInt(a.substr(d,
